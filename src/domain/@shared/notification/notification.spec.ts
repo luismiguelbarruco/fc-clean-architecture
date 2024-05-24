@@ -57,4 +57,32 @@ describe("Unit testss for notifications", () => {
 
     expect(notification.getErrors()).toEqual([error]);
   });
+
+  it("should create product errors", () => {
+    const notification = new Notification();
+    const error = {
+      message: "error message",
+      context: "product",
+    };
+
+    notification.addError(error);
+
+    expect(notification.messages("product")).toBe("product: error message,");
+
+    const error2 = {
+      message: "error message2",
+      context: "product",
+    };
+    notification.addError(error2);
+
+    expect(notification.messages("product")).toBe("product: error message,product: error message2,");
+
+    const error3 = {
+      message: "error message3",
+      context: "product",
+    };
+    notification.addError(error3);
+
+    expect(notification.messages()).toBe("product: error message,product: error message2,product: error message3,");
+  });
 });
